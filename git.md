@@ -32,3 +32,5 @@ index,new,create(commentのid指定しない)
 は親(post)のidが必要
 edit,show,update,destroy
 はcommentのidで一意性を持てるのでboardのid不要
+
+null: false は値が必ず存在するということ
