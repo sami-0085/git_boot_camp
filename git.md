@@ -34,3 +34,7 @@ edit,show,update,destroy
 はcommentのidで一意性を持てるのでboardのid不要
 
 null: false は値が必ず存在するということ
+
+## 今日やったこと　
+2023/11/10/fri
+中間テーブルについて知るためにコンソールで色々いじってみた
