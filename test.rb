@@ -29,7 +29,7 @@ trait :with_tag do
       sequence(:tag_name) { |n| "test_tag_name_#{n}" }
       sequence(:tag_slug) { |n| "test_tag_slug_#{n}" }
     end
-# 「article.tags <<」で 中間テーブルに対応するレコードも自動的に作成して関連付けられる 
+# 「article.tags <<」で 中間テーブル article_tags に対応するレコードも自動的に作成して関連付けられる 
 # 「<<」はアソシエーションのメソッド
     after(:build) do |article, eveluator|
         article.tags << build(:tag, name: eveluator.tag_name, slug: eveluator.tag_slug)
@@ -47,3 +47,59 @@ transient はFactoryBot内でのみ使われる一時的な属性を定義する
 after(:build) FactoryBotのコールバック。
 systemspecなどでインスタンスが作られた時（今回ならarticleインスタンス）、同時に作られる。
 after(:build) はインスタンスがビルドされた直後に実行されるコールバックで、SystemSpecでインスタンスが作られる際にも使用される。
+
+復習
+ArticleインスタンスをfactoryBotで作成時に、一緒に紐づけられたsentenseも作られるようにtraitを作りたい。
+
+trait :with_sentence do
+  transient do
+    sequence(:sentence_body) { |n| "test_article_body_#{n}" }
+  end
+# 「article.sentences <<」で 中間テーブルに対応するレコードも自動的に作成して関連付けられる 
+# 「<<」はアソシエーションのメソッド
+
+  after(:build) do |artile, eveluator|
+    artcle.sentences << create(:sentence, body: eveluator.sentence_body)
+  end
+end
+
+(修正)<< create ではなく =build にしてしまった
+(原因)今回作るsentence と Articleモデルとの関係を考え忘れた。
+なんでafter(:build)なのにcreateなんだろう？
+->create: 新しくオブジェクトをメモリ上に作成して、DBに保存
+->build: オブジェクトはメモリ上だけに作成、DBには保存されない
+(結論)テストデータなんだから、buildで良くない？メモリはテストが終わったらガベージコレクション(GC)に削除されるらしい。
+基本buildでOK! DBに保存する流れをテストしたいときはcreate!
+
+いよいよsystemspecを作りたい
+
+RSpec.describe 'AdminArticles', type: :system do
+  let(:admin) { create :user, :admin }
+  let(:draft_article) { create :article, :draft }
+  let(:future_article) { create :article, :future }
+  let(:past_article) { create :article, :past }
+  before do
+    login(admin)
+  end
+
+  describe '検索機能' do
+    let(:article_with_author) {create(:article, :with_author, author_name: '伊藤')}
+    let(:article_with_author) {create :article, :with_author, author_name: '伊藤'}
+# 上記2つはどちらでも良い。
+
+    it '著者名をセレクトボックスで選択して検索ができること' do
+    
+    end
+
+    it 'タグをセレクトボックスで選択して検索ができること' do
+
+    end
+
+    it '記事内容がフリーワード検索できること' do
+
+    end
+
+    it '下書き状態の記事について、記事内容がフリーワード検索できること'
+
+    end
+  end
