@@ -42,3 +42,46 @@ HTMLのように扱える。
 - エラーの早期発見
 - 大規模開発の容易さ
 - 改良されたコード編集体験
+
+---
+
+ビューのdiv要素にid  
+このdiv要素にReactをマウントして表示する
+```
+<div class="flex h-[93%] flex-col bg-base-200" id="todo_app"></div>
+```
+app/javascriptディレクトリ内にreactディレクトリを作成
+
+```javascript:entrypoints/todo_app.tsx
+import React from "react"; 
+      // Reactライブラリをインポート
+
+import { createRoot } from "react-dom/client";
+      // 以前の方法 (ReactDOM.render) Reac17まで
+      // 新しい方法 (createRoot) React18~
+      // Reactの新しいレンダリングAPIをインポート
+      //createRootを使って、ReactコンポーネントをHTMLにマウントする
+import TodoApp from "../features/todos";
+      // TodoAppコンポーネントをインポート
+      // 任意のReactコンポーネント
+
+// 1. HTMLファイルの中の要素を取得
+const container = document.getElementById("todo_app");
+
+// 2. 取得した要素を使ってReactのルートを作成
+if (container) {
+  const root = createRoot(container);
+
+// 3. Reactコンポーネントをレンダリング（表示）
+  root.render(<TodoApp />);
+}
+```
+メモ  
+Reactのライブラリのインポート  
+createRootを使えるようにする  
+マウントするReactファイルをインポート  
+↓  
+マウントさせたい要素(id)を変数に入れる  
+変数を使ってルートを作成  
+マウントするReactファイルを、作ったルートにレンダリング？  
+
