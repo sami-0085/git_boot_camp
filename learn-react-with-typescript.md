@@ -85,3 +85,47 @@ createRootを使えるようにする
 変数を使ってルートを作成  
 マウントするReactファイルを、作ったルートにレンダリング？  
 
+---
+
+### React HooksのuseState機能
+> useStateは、Reactの状態管理機能の一部で、コンポーネント内でデータの状態を持ち、それを更新する機能を提供する
+
+ReactのuseStateフックを使用して、
+アプリケーションの状態（state）を管理  
+
+> フック(関数コンポーネント)とは？  
+フック (hook) は React 16.8 で追加された新機能。state などの React の機能を、クラスを書かずに使えるようになる。useState, useEffect, useContextなどがある。
+
+```
+const [items, setItems] = useState<Item[]>(initialItems);
+```
+- itemsという名前の状態を作成   
+- countならsetCount、priceならsetPriceといったように、  
+set〇〇とキャメルケースで書くのが慣習  
+- setCountは関数  
+- useStateは二つの要素を持った配列を返す  
+- useState()の()は初期値   
+itemsは初期値としてinitialItemsのデータをもち、  
+この状態を更新するためにsetItems関数が用意されている  
+
+<Item[]>はTypeScriptの型注釈であり、  
+これによりitems配列の各要素がItem型であることを示している  
+
+型定義とは？
+> TypeScriptはitems配列の各要素がどのようなプロパティを持つべきかを理解し、型安全を提供する
+
+```typescript:features/todos/types/index.ts
+export interface Item {
+  id: number;
+  title: string;
+  content: string;
+  category: string;
+  assignee: string;
+  position: number;
+  category_id: number;
+}
+```
+これらの型をimportして使用  
+```import { Item, Category } from "./types"; ```
+
+#### 「interface」と「type」の違い
