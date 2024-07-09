@@ -46,3 +46,16 @@ Railsのモデル層に相当し、アプリケーションが持つリッチな
 
 本来であればデータベースからデータの取得や削除を行うにはSQLのコマンドが必要だが、ORMを使用することでSQLを直接記述せずデータベースの読み書きができる。  
 その点においてActive RecordはRubyとSQLを翻訳する役割をもっていると言える。
+
+### Node.js
+
+- Node.jsは**サーバサイドのJavaScript実行環境**としても**クライアントサイドJavaScriptの開発環境**としても利用される
+- ブラウザ上という制限された環境でしか動けなかったJavaScriptを、PythonやRubyのようにパソコン上で動かせるようにしてくれる
+- WebサーバでもなければRailsやDjangoのようなWebフレームワークでもありません。**JavaScript実行環境です**
+
+### npm
+
+- npmはNode.jsのパッケージ管理ツールです。
+- Pythonにおけるpip、Rubyにおけるgem(RubyGems)、Debianにおけるapt、MacにおけるHomebrew、Rustにおけるcargo。だいたいそんな感じです。
+- パッケージ」というのはライブラリやフレームワークのことです。つまりVueやReact, webpack, jQueryなどのこと
+- Node.jsで使いたいライブラリがある場合、jsファイルをダウンロードしてきて`<script src="xxx.js"></script>`って書いて……とかはせずにnpmを使ってインストールします。
